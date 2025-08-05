@@ -8,6 +8,9 @@
     <artifactId>domain-commons</artifactId>
     <version>1.0.0</version>
 
+    <name>Java Domain Commons</name>
+    <url>https://github.com/peluware/java-domain-commons.git</url>
+
     <description>
         Library providing immutable and reusable domain utility objects for pagination, sorting, and paged
         result handling in Java applications.
@@ -40,6 +43,7 @@
         <developerConnection>scm:git:sshl://github.com/peluware/java-domain-commons.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
 
     <dependencies>
         <dependency>
