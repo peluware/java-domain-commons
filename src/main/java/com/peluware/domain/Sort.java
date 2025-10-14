@@ -43,7 +43,7 @@ public record Sort(Collection<Order> orders) implements Iterable<Order> {
      * @return a new {@code Sort} with one order
      */
     @Contract("_, _ -> new")
-    public static @NotNull Sort by(@NotNull String property, boolean ascending) {
+    public static @NotNull Sort by(@NotNull String property, Order.Direction ascending) {
         return by(new Order(property, ascending));
     }
 

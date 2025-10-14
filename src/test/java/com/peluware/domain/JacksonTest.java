@@ -24,7 +24,7 @@ class JacksonTest {
     @Test
     void testPage() throws JsonProcessingException {
         var content = List.of("item1", "item2", "item3");
-        var page = new Page<>(content, new Pagination(0, 3), Sort.unsorted(), 10);
+        var page = new Page<>(content, new DefaultPagination(0, 3), Sort.unsorted(), 10);
 
         assertNotNull(page);
         System.out.println(OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(page));

@@ -60,7 +60,7 @@ public class Page<T> extends Slice<T> {
     }
 
     /**
-     * Returns the total number of pages based on the {@link Pagination} configuration and total elements.
+     * Returns the total number of pages based on the {@link DefaultPagination} configuration and total elements.
      * <p>
      * If the pagination is unpaginated or the page size is zero, it returns 1.
      *
@@ -70,7 +70,7 @@ public class Page<T> extends Slice<T> {
         if (!getPagination().isPaginated()) {
             return 1;
         }
-        int size = getPagination().size();
+        int size = getPagination().getSize();
         return size == 0 ? 1 : (int) Math.ceil((double) totalElements / size);
     }
 
@@ -90,14 +90,14 @@ public class Page<T> extends Slice<T> {
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, Sort sort, @NotNull LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NotNull List<T> content, DefaultPagination pagination, Sort sort, @NotNull LongSupplier totalElementsSupplier) {
         if (pagination == null || !pagination.isPaginated()) {
             return new Page<>(content, pagination, sort, content.size());
         }
 
-        if (pagination.size() > content.size()) {
+        if (pagination.getSize() > content.size()) {
 
-            if (pagination.offset() == 0) {
+            if (pagination.getOffset() == 0) {
                 return new Page<>(content, pagination, sort, content.size());
             }
             if (!content.isEmpty()) {
@@ -109,14 +109,14 @@ public class Page<T> extends Slice<T> {
     }
 
     /**
-     * Shortcut for {@link #deferred(List, Pagination, Sort, LongSupplier)} with an unsorted default.
+     * Shortcut for {@link #deferred(List, DefaultPagination, Sort, LongSupplier)} with an unsorted default.
      *
      * @param content               the list of items in the current page (must not be {@code null})
      * @param pagination            the pagination configuration (nullable)
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NotNull List<T> content, DefaultPagination pagination, LongSupplier totalElementsSupplier) {
         return deferred(content, pagination, Sort.unsorted(), totalElementsSupplier);
     }
 

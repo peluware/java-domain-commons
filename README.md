@@ -25,11 +25,10 @@ All objects are located in the package:
 ## Basic Usage
 
 ```java
-import com.peluware.domain.Pagination;
-import com.peluware.domain.Sort;
+import com.peluware.domain.DefaultPagination;
 
 // Create a pagination for page 0 and size 20
-var pagination = new Pagination(0, 20);
+var pagination = new DefaultPagination(0, 20);
 ```
 
 ## Requirements
@@ -46,7 +45,7 @@ Add the dependency to your `pom.xml`:
 <dependency>
     <groupId>com.peluware</groupId>
     <artifactId>domain-commons</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

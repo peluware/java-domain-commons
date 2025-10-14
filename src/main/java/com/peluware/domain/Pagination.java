@@ -1,110 +1,97 @@
 package com.peluware.domain;
 
 /**
- * Represents pagination information for a data request.
+ * Represents pagination information for navigating through subsets of a collection.
  * <p>
- * This class encapsulates the page number and page size used
- * to retrieve a specific subset of data.
+ * Implementations provide the current page number and page size,
+ * as well as utility methods to navigate between pages and compute offsets.
  * </p>
- *
  * <p>
- * A pagination is considered "unpaginated" if both {@code number}
- * and {@code size} are {@code null} or if {@code size} is not greater than zero.
+ * Methods such as {@link #getOffset()}, {@link #next()}, {@link #previous()}
+ * and {@link #first()} may throw {@link UnsupportedOperationException} if the pagination
+ * does not meet the required conditions. Use {@link #isPaginated()} to verify.
  * </p>
- *
- * @param number the current page number (zero-based index), or {@code null} for unpaginated
- * @param size   the size of the page (number of elements per page), or {@code null} for unpaginated
  */
-public record Pagination(Integer number, Integer size) {
-
-    private static final Pagination UNPAGINATED = new Pagination(null, null);
+public interface Pagination {
 
     /**
-     * Returns {@code true} if both {@code number} and {@code size} are set and {@code size > 0}.
+     * Returns the current page number (zero-based index).
      *
-     * @return {@code true} if pagination is active
+     * @return the current page number
      */
-    public boolean isPaginated() {
-        return number != null && size != null && size > 0;
-    }
+    int getNumber();
 
     /**
-     * Calculates the offset in the result set based on the page number and size.
+     * Returns the size of the page (number of elements per page).
      *
-     * @return the offset (i.e., number of items to skip)
-     * @throws UnsupportedOperationException if pagination is not enabled
+     * @return the page size
      */
-    public int offset() {
-        assertPaginated();
-        return Math.max(0, number() * size());
-    }
+    int getSize();
+
+    /**
+     * Returns {@code true} if pagination can be applied.
+     *
+     * @return {@code true} if pagination can be applied
+     */
+    boolean isPaginated();
+
+    /**
+     * Calculates the offset in the collection based on the current page number and page size.
+     *
+     * @return the offset (number of elements to skip)
+     * @throws UnsupportedOperationException if {@link #isPaginated()} returns {@code false}
+     */
+    long getOffset();
 
     /**
      * Returns a new {@code Pagination} instance representing the next page.
      *
-     * @return a new {@code Pagination} for the next page
-     * @throws UnsupportedOperationException if pagination is not enabled
+     * @return a new Pagination instance for the next page
+     * @throws UnsupportedOperationException if {@link #isPaginated()} returns {@code false}
      */
-    public Pagination next() {
-        assertPaginated();
-        return new Pagination(number + 1, size);
-    }
+    Pagination next();
 
     /**
      * Returns a new {@code Pagination} instance representing the previous page.
      *
-     * @return a new {@code Pagination} for the previous page
-     * @throws UnsupportedOperationException if pagination is not enabled or if already on the first page
+     * @return a new Pagination instance for the previous page
+     * @throws UnsupportedOperationException if {@link #isPaginated()} returns {@code false}
+     *         or if already at the first page
      */
-    public Pagination previous() {
-        assertPaginated();
-        if (number <= 0) {
-            throw new UnsupportedOperationException("Cannot go to previous page from the first page");
-        }
-        return new Pagination(number - 1, size);
-    }
-
+    Pagination previous();
 
     /**
-     * Returns a new {@code Pagination} instance for the first page.
-     * *
-     * @return a new {@code Pagination} for the first page
-     * @throws UnsupportedOperationException if pagination is not enabled
-     * */
-    public Pagination first() {
-        assertPaginated();
-        return new Pagination(0, size);
-    }
+     * Returns a new {@code Pagination} instance representing the first page.
+     *
+     * @return a new Pagination instance for the first page
+     * @throws UnsupportedOperationException if {@link #isPaginated()} returns {@code false}
+     */
+    Pagination first();
 
     /**
      * Checks if there is a previous page available.
      *
-     * @return {@code true} if the current page is greater than zero
+     * @return {@code true} if the current page number is greater than zero
+     * @throws UnsupportedOperationException if {@link #isPaginated()} returns {@code false}
      */
-    public boolean hasPrevious() {
-        assertPaginated();
-        return number > 0;
-    }
+    boolean hasPrevious();
 
-    private void assertPaginated() {
-        if (!isPaginated()) {
-            throw new UnsupportedOperationException("Pagination is not enabled");
-        }
+
+    /**
+     * Returns a singleton instance representing an unpaginated state.
+     * @return an unpaginated Pagination instance
+     */
+    static Pagination unpaginated() {
+        return DefaultUnpagination.INSTANCE;
     }
 
     /**
-     * Returns a static instance representing an unpaginated request.
-     *
-     * @return the unpaginated {@code Pagination} instance
+     * Creates a new {@code Pagination} instance with the specified page number and size.
+     * @param number the current page number (zero-based index)
+     * @param size the size of the page (number of elements per page)
+     * @return a new Pagination instance
      */
-    public static Pagination unpaginated() {
-        return UNPAGINATED;
-    }
-
-    @Override
-    public String toString() {
-        return isPaginated()
-                ? "Pagination[page=" + number + ", size=" + size + "]"
-                : "Pagination[UNPAGINATED]";
+    static Pagination of(int number, int size) {
+        return new DefaultPagination(number, size);
     }
 }
