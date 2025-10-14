@@ -18,7 +18,6 @@ class JacksonTest {
         var slice = new Slice<>(content);
 
         assertNotNull(slice);
-        System.out.println(OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(slice));
     }
 
     @Test

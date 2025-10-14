@@ -6,7 +6,7 @@
 
     <groupId>com.peluware</groupId>
     <artifactId>domain-commons</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>Java Domain Commons</name>
     <url>https://github.com/peluware/java-domain-commons.git</url>

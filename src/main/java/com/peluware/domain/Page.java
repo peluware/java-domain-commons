@@ -90,7 +90,7 @@ public class Page<T> extends Slice<T> {
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, DefaultPagination pagination, Sort sort, @NotNull LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, Sort sort, @NotNull LongSupplier totalElementsSupplier) {
         if (pagination == null || !pagination.isPaginated()) {
             return new Page<>(content, pagination, sort, content.size());
         }
@@ -109,14 +109,14 @@ public class Page<T> extends Slice<T> {
     }
 
     /**
-     * Shortcut for {@link #deferred(List, DefaultPagination, Sort, LongSupplier)} with an unsorted default.
+     * Shortcut for {@link #deferred(List, Pagination, Sort, LongSupplier)} with an unsorted default.
      *
      * @param content               the list of items in the current page (must not be {@code null})
      * @param pagination            the pagination configuration (nullable)
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, DefaultPagination pagination, LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, LongSupplier totalElementsSupplier) {
         return deferred(content, pagination, Sort.unsorted(), totalElementsSupplier);
     }
 
