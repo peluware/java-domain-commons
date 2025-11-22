@@ -60,6 +60,15 @@ public class Page<T> extends Slice<T> {
     }
 
     /**
+     * Get the total number of elements across all pages.
+     *
+     * @return the total number of elements
+     */
+    public long getTotalElements() {
+        return totalElements;
+    }
+
+    /**
      * Returns the total number of pages based on the {@link DefaultPagination} configuration and total elements.
      * <p>
      * If the pagination is unpaginated or the page size is zero, it returns 1.
