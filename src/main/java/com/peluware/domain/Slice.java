@@ -54,4 +54,45 @@ public class Slice<T> {
     public Slice(@NotNull List<T> content) {
         this(content, Pagination.unpaginated(), Sort.unsorted());
     }
+
+    /**
+     * Gets the unmodifiable list of items contained in this slice.
+     *
+     * @return the content list
+     */
+    public @NotNull List<T> getContent() {
+        return content;
+    }
+
+    /**
+     * Gets the pagination information associated with this slice.
+     *
+     * @return the pagination
+     */
+    public @NotNull Pagination getPagination() {
+        return pagination;
+    }
+
+    /**
+     * Gets the sorting information associated with this slice.
+     *
+     * @return the sort
+     */
+    public @NotNull Sort getSort() {
+        return sort;
+    }
+
+    /**
+     * Maps the content of this slice to a new type using the provided mapper function.
+     *
+     * @param mapper the function to apply to each element in the content list
+     * @param <R>    the type of elements in the resulting slice
+     * @return a new {@code Slice} containing the mapped content
+     */
+    public <R> Slice<R> map(@NotNull Function<? super T, R> mapper) {
+        var mappedContent = content.stream()
+                .map(mapper)
+                .toList();
+        return new Slice<>(mappedContent, pagination, sort);
+    }
 }
