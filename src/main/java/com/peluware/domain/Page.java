@@ -14,7 +14,6 @@ import java.util.function.LongSupplier;
  *
  * @param <T> the type of elements in the content list
  */
-@Getter
 public class Page<T> extends Slice<T> {
 
     /**
