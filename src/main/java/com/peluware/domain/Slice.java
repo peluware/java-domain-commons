@@ -1,10 +1,10 @@
 package com.peluware.domain;
 
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Represents a slice of a collection of items, typically used for partial pagination or segmented results.
@@ -14,23 +14,22 @@ import java.util.List;
  *
  * @param <T> the type of elements in the content list
  */
-@Getter
 public class Slice<T> {
 
     /**
      * The unmodifiable list of items contained in this slice.
      */
-    private final List<T> content;
+    protected final List<T> content;
 
     /**
      * The pagination information associated with this slice.
      */
-    private final Pagination pagination;
+    protected final Pagination pagination;
 
     /**
      * The sorting information associated with this slice.
      */
-    private final Sort sort;
+    protected final Sort sort;
 
     /**
      * Creates a new {@code Slice} instance with the given content, pagination, and sort configuration.

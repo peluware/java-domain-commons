@@ -1,9 +1,9 @@
 package com.peluware.domain;
 
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.LongSupplier;
 
 /**
@@ -24,10 +24,10 @@ public class Page<T> extends Slice<T> {
     /**
      * Creates a new {@code Page} with the given content, pagination, sort information, and total element count.
      *
-     * @param content        the list of items in the current page (must not be {@code null})
-     * @param pagination     the pagination information (nullable)
-     * @param sort           the sorting information (nullable)
-     * @param totalElements  the total number of elements across all pages
+     * @param content       the list of items in the current page (must not be {@code null})
+     * @param pagination    the pagination information (nullable)
+     * @param sort          the sorting information (nullable)
+     * @param totalElements the total number of elements across all pages
      * @throws IllegalArgumentException if {@code totalElements} is less than {@code content.size()}
      */
     public Page(@NotNull List<T> content, Pagination pagination, Sort sort, long totalElements) {
@@ -41,8 +41,8 @@ public class Page<T> extends Slice<T> {
     /**
      * Creates a new {@code Page} with the given content and total element count, using unpaginated and unsorted defaults.
      *
-     * @param content        the list of items in the current page (must not be {@code null})
-     * @param totalElements  the total number of elements
+     * @param content       the list of items in the current page (must not be {@code null})
+     * @param totalElements the total number of elements
      */
     public Page(@NotNull List<T> content, long totalElements) {
         this(content, Pagination.unpaginated(), Sort.unsorted(), totalElements);

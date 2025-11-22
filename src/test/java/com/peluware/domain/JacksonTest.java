@@ -13,7 +13,7 @@ class JacksonTest {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Test
-    void testSlice() throws JsonProcessingException {
+    void testSlice() {
         var content = List.of("item1", "item2");
         var slice = new Slice<>(content);
 
