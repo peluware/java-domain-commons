@@ -84,6 +84,19 @@ public class Page<T> extends Slice<T> {
     }
 
     /**
+     * @param mapper the mapping function to apply to each element
+     * @param <R>    the type of the resulting elements after mapping
+     * @return a new {@code Page} instance with mapped content
+     */
+    @Override
+    public <R> Page<R> map(@NotNull Function<? super T, R> mapper) {
+        var mappedContent = content.stream()
+                .map(mapper)
+                .toList();
+        return new Page<>(mappedContent, pagination, sort, totalElements);
+    }
+
+    /**
      * Creates a {@code Page} instance using a deferred supplier to calculate total elements when needed.
      * <p>
      * This is useful when computing the total element count is expensive and can be avoided in certain conditions.
