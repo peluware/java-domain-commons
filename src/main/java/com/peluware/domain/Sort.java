@@ -1,7 +1,6 @@
 package com.peluware.domain;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,8 +41,7 @@ public record Sort(Collection<Order> orders) implements Iterable<Order> {
      * @param ascending {@code true} for ascending order, {@code false} for descending
      * @return a new {@code Sort} with one order
      */
-    @Contract("_, _ -> new")
-    public static @NotNull Sort by(@NotNull String property, Order.Direction ascending) {
+    public static @NonNull Sort by(@NonNull String property, Order.Direction ascending) {
         return by(new Order(property, ascending));
     }
 
@@ -53,8 +51,7 @@ public record Sort(Collection<Order> orders) implements Iterable<Order> {
      * @param orders the sorting orders
      * @return a new {@code Sort} instance
      */
-    @Contract("_ -> new")
-    public static @NotNull Sort by(Order @NotNull ... orders) {
+    public static @NonNull Sort by(Order @NonNull ... orders) {
         return new Sort(List.of(orders));
     }
 
@@ -64,8 +61,7 @@ public record Sort(Collection<Order> orders) implements Iterable<Order> {
      * @param orders the collection of sorting orders
      * @return a new {@code Sort} instance
      */
-    @Contract("_ -> new")
-    public static @NotNull Sort by(Collection<Order> orders) {
+    public static @NonNull Sort by(Collection<Order> orders) {
         return new Sort(List.copyOf(orders));
     }
 
@@ -84,7 +80,7 @@ public record Sort(Collection<Order> orders) implements Iterable<Order> {
      * @return an {@link Iterator} for the collection of orders
      */
     @Override
-    public @NotNull Iterator<Order> iterator() {
+    public @NonNull Iterator<Order> iterator() {
         return orders.iterator();
     }
 }

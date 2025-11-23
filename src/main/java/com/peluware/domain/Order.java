@@ -1,6 +1,7 @@
 package com.peluware.domain;
 
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
 
 /**
  * Represents a sorting criterion for a specific property.
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @param property  the name of the property to sort by (e.g., "name", "createdAt").
  * @param direction the direction of sorting
  */
-public record Order(@NotNull String property, @NotNull Direction direction) {
+public record Order(@NonNull String property, @NonNull Direction direction) {
 
     /**
      * Direction of sorting: ascending or descending.
@@ -34,7 +35,7 @@ public record Order(@NotNull String property, @NotNull Direction direction) {
      * @param property the property to sort by
      * @return a new {@code Order} instance with ascending direction
      */
-    public static @NotNull Order ascending(@NotNull String property) {
+    public static @NonNull Order ascending(@NonNull String property) {
         return new Order(property, Direction.ASC);
     }
 
@@ -44,7 +45,7 @@ public record Order(@NotNull String property, @NotNull Direction direction) {
      * @param property the property to sort by
      * @return a new {@code Order} instance with descending direction
      */
-    public static @NotNull Order descending(@NotNull String property) {
+    public static @NonNull Order descending(@NonNull String property) {
         return new Order(property, Direction.DESC);
     }
 }

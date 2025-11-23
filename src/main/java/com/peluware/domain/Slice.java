@@ -1,6 +1,7 @@
 package com.peluware.domain;
 
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Slice<T> {
      * @param pagination the pagination information (may be {@code null})
      * @param sort       the sorting information (may be {@code null})
      */
-    public Slice(@NotNull List<T> content, Pagination pagination, Sort sort) {
+    public Slice(@NonNull List<T> content, Pagination pagination, Sort sort) {
         this.content = Collections.unmodifiableList(content);
         this.pagination = pagination != null ? pagination : Pagination.unpaginated();
         this.sort = sort != null ? sort : Sort.unsorted();
@@ -50,7 +51,7 @@ public class Slice<T> {
      *
      * @param content the list of items in the slice, must not be {@code null}
      */
-    public Slice(@NotNull List<T> content) {
+    public Slice(@NonNull List<T> content) {
         this(content, Pagination.unpaginated(), Sort.unsorted());
     }
 
@@ -59,7 +60,7 @@ public class Slice<T> {
      *
      * @return the content list
      */
-    public @NotNull List<T> getContent() {
+    public @NonNull List<T> getContent() {
         return content;
     }
 
@@ -68,7 +69,7 @@ public class Slice<T> {
      *
      * @return the pagination
      */
-    public @NotNull Pagination getPagination() {
+    public @NonNull Pagination getPagination() {
         return pagination;
     }
 
@@ -77,7 +78,7 @@ public class Slice<T> {
      *
      * @return the sort
      */
-    public @NotNull Sort getSort() {
+    public @NonNull Sort getSort() {
         return sort;
     }
 
@@ -88,7 +89,7 @@ public class Slice<T> {
      * @param <R>    the type of elements in the resulting slice
      * @return a new {@code Slice} containing the mapped content
      */
-    public <R> Slice<R> map(@NotNull Function<? super T, R> mapper) {
+    public <R> Slice<R> map(@NonNull Function<? super T, R> mapper) {
         var mappedContent = content.stream()
                 .map(mapper)
                 .toList();

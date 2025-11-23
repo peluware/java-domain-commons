@@ -1,6 +1,7 @@
 package com.peluware.domain;
 
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.function.Function;
@@ -30,7 +31,7 @@ public class Page<T> extends Slice<T> {
      * @param totalElements the total number of elements across all pages
      * @throws IllegalArgumentException if {@code totalElements} is less than {@code content.size()}
      */
-    public Page(@NotNull List<T> content, Pagination pagination, Sort sort, long totalElements) {
+    public Page(@NonNull List<T> content, Pagination pagination, Sort sort, long totalElements) {
         super(content, pagination, sort);
         if (totalElements < content.size()) {
             throw new IllegalArgumentException("Total elements must be greater than or equal to the size of the content.");
@@ -44,7 +45,7 @@ public class Page<T> extends Slice<T> {
      * @param content       the list of items in the current page (must not be {@code null})
      * @param totalElements the total number of elements
      */
-    public Page(@NotNull List<T> content, long totalElements) {
+    public Page(@NonNull List<T> content, long totalElements) {
         this(content, Pagination.unpaginated(), Sort.unsorted(), totalElements);
     }
 
@@ -54,7 +55,7 @@ public class Page<T> extends Slice<T> {
      *
      * @param content the list of items in the current page (must not be {@code null})
      */
-    public Page(@NotNull List<T> content) {
+    public Page(@NonNull List<T> content) {
         this(content, content.size());
     }
 
@@ -88,7 +89,7 @@ public class Page<T> extends Slice<T> {
      * @return a new {@code Page} instance with mapped content
      */
     @Override
-    public <R> Page<R> map(@NotNull Function<? super T, R> mapper) {
+    public <R> Page<R> map(@NonNull Function<? super T, R> mapper) {
         var mappedContent = content.stream()
                 .map(mapper)
                 .toList();
@@ -111,7 +112,7 @@ public class Page<T> extends Slice<T> {
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, Sort sort, @NotNull LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NonNull List<T> content, Pagination pagination, Sort sort, @NonNull LongSupplier totalElementsSupplier) {
         if (pagination == null || !pagination.isPaginated()) {
             return new Page<>(content, pagination, sort, content.size());
         }
@@ -137,7 +138,7 @@ public class Page<T> extends Slice<T> {
      * @param totalElementsSupplier a deferred supplier for the total element count (must not be {@code null})
      * @return a {@code Page} instance
      */
-    public static <T> Page<T> deferred(@NotNull List<T> content, Pagination pagination, LongSupplier totalElementsSupplier) {
+    public static <T> Page<T> deferred(@NonNull List<T> content, Pagination pagination, LongSupplier totalElementsSupplier) {
         return deferred(content, pagination, Sort.unsorted(), totalElementsSupplier);
     }
 
